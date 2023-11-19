@@ -45,28 +45,31 @@ public class Server implements ServerInterface {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             StringBuilder requestBuilder = new StringBuilder();
 
+            // Read the Header
             String line;
             while (!(line = in.readLine()).isEmpty()) {
                 requestBuilder.append(line + "\r\n");
             }
             String request = requestBuilder.toString();
 
+            // Read the Body
             String body = "";
             if (request.contains("Content-Length")) {
-                int contentLength = Integer.parseInt(request.split("Content-Length: ")[1].split("\r\n")[0]);
+                int contentLength =
+                    Integer.parseInt(request.split("Content-Length: ")[1].split("\r\n")[0]);
                 char[] bodyChars = new char[contentLength];
                 in.read(bodyChars, 0, contentLength);
                 body = new String(bodyChars);
             }
 
-            System.out.println(body);
-
+            // split the request
             String[] requestLines = request.split("\r\n");
             String[] requestLine = requestLines[0].split(" ");
 
             String httpMethode = requestLine[0];
             String httpPath = requestLine[1];
 
+            // handle the request
             send(handleRequest(httpMethode, httpPath));
         } catch (Exception e) {
             System.out.println("Error while handling client");
@@ -107,7 +110,6 @@ public class Server implements ServerInterface {
     @Override
     public void close() {
         try {
-            send("{\"type\": \"DISCONNECTED\"}");
             socket.close();
             serverSocket.close();
         } catch (Exception e) {

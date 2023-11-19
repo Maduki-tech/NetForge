@@ -11,7 +11,8 @@ public class HTTP {
     }
 
     public String handleGet(String path) {
-        return ResponseBuilder.buildResponse("{\"message\": \"Hello World\"}", "200 OK", ContentType.JSON);
+        return ResponseBuilder.buildResponse("{\"message\": \"Hello World\"}", "200 OK",
+                                             ContentType.JSON);
     }
 
     public String handlePost(String path) {
