@@ -2,10 +2,7 @@
   <img src="./docs/networkforging.png" alt="NetForge">
 </h1>
 
-# NetForge
----
-
-A networking Forging Simulator.
+> A networking Forging Simulator.
 
 # What is this project about?
 
