@@ -50,6 +50,17 @@ public class Server implements ServerInterface {
                 requestBuilder.append(line + "\r\n");
             }
             String request = requestBuilder.toString();
+
+            String body = "";
+            if (request.contains("Content-Length")) {
+                int contentLength = Integer.parseInt(request.split("Content-Length: ")[1].split("\r\n")[0]);
+                char[] bodyChars = new char[contentLength];
+                in.read(bodyChars, 0, contentLength);
+                body = new String(bodyChars);
+            }
+
+            System.out.println(body);
+
             String[] requestLines = request.split("\r\n");
             String[] requestLine = requestLines[0].split(" ");
 
