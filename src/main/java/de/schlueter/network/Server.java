@@ -1,5 +1,6 @@
 package de.schlueter.network;
 
+import de.schlueter.protocols.HTTP;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
@@ -64,11 +65,15 @@ public class Server implements ServerInterface {
 
     private String handleRequest(String methode, String path) {
         String response = "";
+        HTTP http = new HTTP();
 
         switch (methode) {
             case "GET":
+                response = http.handleGet(path);
+
                 break;
             case "POST":
+                response = http.handlePost(path);
                 break;
 
             default:
